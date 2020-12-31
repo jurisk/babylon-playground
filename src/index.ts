@@ -1,13 +1,17 @@
 import {
     ArcRotateCamera,
-    Camera, DebugLayer,
+    Camera,
+    DebugLayer,
     Engine,
-    HemisphericLight, Light, Scene, Vector3
+    HemisphericLight,
+    Light,
+    Scene,
+    Vector3
 } from "@babylonjs/core"
 import '@babylonjs/inspector'
-import * as GUI from "@babylonjs/gui";
 import {Exercise, Renderer} from "./domain";
 import {setupScene} from "./setup-scene";
+import {createUi} from "./ui";
 
 const createLight = (scene: Scene): Light =>
     new HemisphericLight("light", new Vector3(0, 1, 0), scene)
@@ -38,54 +42,11 @@ const createScene =  (canvas: HTMLCanvasElement, engine: Engine) => {
     return scene
 }
 
-const createButton = (parent: GUI.Container, name: string, text: string, callback: () => void) => {
-    const button = GUI.Button.CreateSimpleButton(name, text)
-    button.width = "120px"
-    button.height = "40px"
-    button.color = "white"
-    button.background = "blue"
-    button.onPointerUpObservable.add(callback)
-    parent.addControl(button)
-}
-
-let selectedExercise: Exercise = Exercise.Exercise1
-
-let selectedRenderer = Renderer.Mesh
 let disposePrevious: () => void = () => {}
 
-const changeExercise = (exercise: Exercise, scene: Scene): void => {
-    selectedExercise = exercise
-    recreateScene(scene)
-}
-
-const changeRendering = (renderer: Renderer, scene: Scene): void => {
-    selectedRenderer = renderer
-    recreateScene(scene)
-}
-
-const recreateScene = (scene: Scene): void => {
+const recreateScene = (scene: Scene, exercise: Exercise, renderer: Renderer): void => {
     disposePrevious()
-    disposePrevious = setupScene(scene, selectedExercise, selectedRenderer)
-}
-
-const createUi = (scene: Scene) => {
-    const ui = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI")
-    const exercisePanel = new GUI.StackPanel("exercisePanel")
-    ui.addControl(exercisePanel)
-    exercisePanel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
-    exercisePanel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
-    createButton(exercisePanel,"exercise1", "Exercise 1", () => changeExercise(Exercise.Exercise1, scene))
-    createButton(exercisePanel,"exercise2", "Exercise 2", () => changeExercise(Exercise.Exercise2, scene))
-    createButton(exercisePanel,"exercise3", "Exercise 3", () => changeExercise(Exercise.Exercise3, scene))
-
-    const renderingPanel = new GUI.StackPanel("renderingPanel")
-    ui.addControl(renderingPanel)
-    renderingPanel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
-    renderingPanel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
-    createButton(renderingPanel,"mesh", "Mesh", () => changeRendering(Renderer.Mesh, scene))
-    createButton(renderingPanel,"clone", "Clone", () => changeRendering(Renderer.Clone, scene))
-    createButton(renderingPanel,"instanceMesh", "Instance Mesh", () => changeRendering(Renderer.InstanceMesh, scene))
-    createButton(renderingPanel,"thinInstance", "Thin Instance", () => changeRendering(Renderer.ThinInstance, scene))
+    disposePrevious = setupScene(scene, exercise, renderer)
 }
 
 const run = () => {
@@ -93,7 +54,7 @@ const run = () => {
     const engine = createEngine(canvas)
     const scene = createScene(canvas, engine)
 
-    createUi(scene)
+    createUi(scene, recreateScene)
 
     engine.resize()
     window.addEventListener("resize", () => engine.resize())
@@ -101,7 +62,7 @@ const run = () => {
         scene.render()
     })
 
-    recreateScene(scene)
+    recreateScene(scene, Exercise.Exercise1, Renderer.Mesh)
 }
 
 run()
