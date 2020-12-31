@@ -2,7 +2,7 @@ import {Scene} from "@babylonjs/core";
 import * as GUI from "@babylonjs/gui";
 import {Exercise, Renderer} from "./domain";
 
-let selectedExercise: Exercise = Exercise.Exercise1
+let selectedExercise: Exercise = Exercise.Exercise0
 let selectedRenderer = Renderer.Mesh
 
 const createButton = (parent: GUI.Container, name: string, text: string, callback: () => void) => {
@@ -31,6 +31,7 @@ export const createUi = (scene: Scene, recreateScene: (scene: Scene, exercise: E
     ui.addControl(exercisePanel)
     exercisePanel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
     exercisePanel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
+    createButton(exercisePanel,"exercise0", "Exercise 0", () => changeExercise(Exercise.Exercise0, scene, recreateScene))
     createButton(exercisePanel,"exercise1", "Exercise 1", () => changeExercise(Exercise.Exercise1, scene, recreateScene))
     createButton(exercisePanel,"exercise2", "Exercise 2", () => changeExercise(Exercise.Exercise2, scene, recreateScene))
     createButton(exercisePanel,"exercise3", "Exercise 3", () => changeExercise(Exercise.Exercise3, scene, recreateScene))
@@ -41,6 +42,6 @@ export const createUi = (scene: Scene, recreateScene: (scene: Scene, exercise: E
     renderingPanel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
     createButton(renderingPanel,"mesh", "Mesh", () => changeRendering(Renderer.Mesh, scene, recreateScene))
     createButton(renderingPanel,"clone", "Clone", () => changeRendering(Renderer.Clone, scene, recreateScene))
-    createButton(renderingPanel,"instanceMesh", "Instance Mesh", () => changeRendering(Renderer.InstanceMesh, scene, recreateScene))
+    createButton(renderingPanel,"instancedMesh", "Instanced Mesh", () => changeRendering(Renderer.InstancedMesh, scene, recreateScene))
     createButton(renderingPanel,"thinInstance", "Thin Instance", () => changeRendering(Renderer.ThinInstance, scene, recreateScene))
 }

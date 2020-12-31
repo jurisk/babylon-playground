@@ -62,7 +62,7 @@ const run = () => {
         scene.render()
     })
 
-    recreateScene(scene, Exercise.Exercise1, Renderer.Mesh)
+    recreateScene(scene, Exercise.Exercise0, Renderer.Mesh)
 }
 
 run()
