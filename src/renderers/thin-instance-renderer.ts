@@ -1,14 +1,10 @@
 import {Color4, Matrix, Scene, StandardMaterial} from "@babylonjs/core";
-import {buildTemplate, Model} from "../models/models";
+import {Model, singleTemplate} from "../models/models";
 import {DisposeFunction} from "./renderer";
 
 export const thinInstanceRenderer = (scene: Scene, model: Model): DisposeFunction => {
-    const figureType = model.figures[0].type
-    if (!model.figures.every((figure) => figure.type === figureType)) {
-        throw new Error("Expected all figures to have the same type")
-    }
+    const template = singleTemplate(model.figures, scene)
 
-    const template = buildTemplate(figureType, scene)
     template.material = new StandardMaterial("template-material", scene)
     const bufferMatrices = new Float32Array(16 * model.figures.length)
     const bufferColors = new Float32Array(4 * model.figures.length)

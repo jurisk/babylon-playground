@@ -1,24 +1,23 @@
 import {DisposeFunction} from "./renderer";
-import {Scene, SolidParticleSystem, SphereBuilder} from "@babylonjs/core";
-import {Model} from "../models/models";
+import {Color4, Scene, SolidParticleSystem} from "@babylonjs/core";
+import {Model, singleTemplate} from "../models/models";
 
 export const solidParticleSystemRenderer = (scene: Scene, model: Model): DisposeFunction => {
-    const size = 0.5
-    const rows = 4
-    const columns = 4
+    const template = singleTemplate(model.figures, scene)
+
     const sps = new SolidParticleSystem("sps", scene)
-    const template = SphereBuilder.CreateSphere("template", { diameter: size })
-    sps.addShape(template, rows * columns)
+    sps.addShape(template, model.figures.length)
     template.dispose()
     sps.buildMesh()
     sps.initParticles = () => {
-        for (let i = 0; i < sps.nbParticles; i++) {
-            const column = i % columns
-            const row = Math.floor(i / rows)
-            const particle = sps.particles[i]
-            particle.position.x = column * size
-            particle.position.z = row * size
-        }
+        model.figures.forEach((figure, idx) => {
+            const particle = sps.particles[idx]
+            particle.position = figure.position
+            particle.color = new Color4(figure.color.r, figure.color.g, figure.color.b, 1)
+            if (figure.rotation) {
+                particle.rotation = figure.rotation
+            }
+        })
     }
     sps.initParticles()
     sps.setParticles()

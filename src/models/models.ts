@@ -24,6 +24,15 @@ export const buildTemplate = (figureType: FigureType, scene: Scene) => {
     }
 }
 
+export const singleTemplate = (figures: Figure[], scene: Scene) => {
+    const figureType = figures[0].type
+    if (!figures.every((figure) => figure.type === figureType)) {
+        throw new Error("Expected all figures to have the same type")
+    }
+
+    return buildTemplate(figureType, scene)
+}
+
 export interface Figure {
     position: Vector3
     rotation?: Vector3
