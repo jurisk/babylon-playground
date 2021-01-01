@@ -1,52 +1,34 @@
-import {Scene} from "@babylonjs/core";
 import * as GUI from "@babylonjs/gui";
 import {Exercise, Renderer} from "./domain";
 
-let selectedExercise: Exercise = Exercise.Exercise0
-let selectedRenderer = Renderer.Mesh
+export const createUi = (changeExercise: (exercise: Exercise) => void, changeRenderer: (renderer: Renderer) => void) => {
+    const createButton = (parent: GUI.Container, name: string, text: string, callback: () => void) => {
+        const button = GUI.Button.CreateSimpleButton(name, text)
+        button.width = "120px"
+        button.height = "40px"
+        button.color = "white"
+        button.background = "blue"
+        button.onPointerUpObservable.add(callback)
+        parent.addControl(button)
+    }
 
-const createButton = (parent: GUI.Container, name: string, text: string, callback: () => void) => {
-    const button = GUI.Button.CreateSimpleButton(name, text)
-    button.width = "120px"
-    button.height = "40px"
-    button.color = "white"
-    button.background = "blue"
-    button.onPointerUpObservable.add(callback)
-    parent.addControl(button)
-}
-
-export const recreate = (scene: Scene, recreateScene: (scene: Scene, exercise: Exercise, renderer: Renderer) => void) => {
-    recreateScene(scene, selectedExercise, selectedRenderer)
-}
-
-const changeExercise = (exercise: Exercise, scene: Scene, recreateScene: (scene: Scene, exercise: Exercise, renderer: Renderer) => void): void => {
-    selectedExercise = exercise
-    recreate(scene, recreateScene)
-}
-
-const changeRendering = (renderer: Renderer, scene: Scene, recreateScene: (scene: Scene, exercise: Exercise, renderer: Renderer) => void): void => {
-    selectedRenderer = renderer
-    recreate(scene, recreateScene)
-}
-
-export const createUi = (scene: Scene, recreateScene: (scene: Scene, exercise: Exercise, renderer: Renderer) => void) => {
     const ui = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI")
     const exercisePanel = new GUI.StackPanel("exercisePanel")
     ui.addControl(exercisePanel)
     exercisePanel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP
     exercisePanel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
-    createButton(exercisePanel,"exercise0", "Exercise 0", () => changeExercise(Exercise.Exercise0, scene, recreateScene))
-    createButton(exercisePanel,"exercise1", "Exercise 1", () => changeExercise(Exercise.Exercise1, scene, recreateScene))
-    createButton(exercisePanel,"exercise2", "Exercise 2", () => changeExercise(Exercise.Exercise2, scene, recreateScene))
-    createButton(exercisePanel,"exercise3", "Exercise 3", () => changeExercise(Exercise.Exercise3, scene, recreateScene))
+    createButton(exercisePanel,"exercise0", "Exercise 0", () => changeExercise(Exercise.Exercise0))
+    createButton(exercisePanel,"exercise1", "Exercise 1", () => changeExercise(Exercise.Exercise1))
+    createButton(exercisePanel,"exercise2", "Exercise 2", () => changeExercise(Exercise.Exercise2))
+    createButton(exercisePanel,"exercise3", "Exercise 3", () => changeExercise(Exercise.Exercise3))
 
     const renderingPanel = new GUI.StackPanel("renderingPanel")
     ui.addControl(renderingPanel)
     renderingPanel.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
     renderingPanel.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
-    createButton(renderingPanel,"mesh", "Mesh", () => changeRendering(Renderer.Mesh, scene, recreateScene))
-    createButton(renderingPanel,"clone", "Clone", () => changeRendering(Renderer.Clone, scene, recreateScene))
-    createButton(renderingPanel,"instancedMesh", "Instanced Mesh", () => changeRendering(Renderer.InstancedMesh, scene, recreateScene))
-    createButton(renderingPanel,"thinInstance", "Thin Instance", () => changeRendering(Renderer.ThinInstance, scene, recreateScene))
-    createButton(renderingPanel,"solidParticleSystem", "Solid Particle System", () => changeRendering(Renderer.SolidParticleSystem, scene, recreateScene))
+    createButton(renderingPanel,"mesh", "Mesh", () => changeRenderer(Renderer.Mesh))
+    createButton(renderingPanel,"clone", "Clone", () => changeRenderer(Renderer.Clone))
+    createButton(renderingPanel,"instancedMesh", "Instanced Mesh", () => changeRenderer(Renderer.InstancedMesh))
+    createButton(renderingPanel,"thinInstance", "Thin Instance", () => changeRenderer(Renderer.ThinInstance))
+    createButton(renderingPanel,"solidParticleSystem", "Solid Particle System", () => changeRenderer(Renderer.SolidParticleSystem))
 }

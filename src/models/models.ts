@@ -18,9 +18,13 @@ export const buildTemplates = (scene: Scene): Record<FigureType, Mesh> => {
 export const buildTemplate = (figureType: FigureType, scene: Scene) => {
     switch (figureType) {
         case 'sphere':
-            return SphereBuilder.CreateSphere(figureType, { diameter: 1 }, scene)
+            const sphere = SphereBuilder.CreateSphere(figureType, { diameter: 1 }, scene)
+            sphere.receiveShadows = true
+            return sphere
         case 'square-chip':
-            return BoxBuilder.CreateBox(figureType, {width: 2, depth: 2, height: 0.5}, scene)
+            const box = BoxBuilder.CreateBox(figureType, {width: 2, depth: 2, height: 0.5}, scene)
+            box.receiveShadows
+            return box
     }
 }
 

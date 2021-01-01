@@ -1,6 +1,7 @@
 import {
+    Color3,
     Mesh,
-    Scene,
+    Scene, StandardMaterial,
 } from "@babylonjs/core"
 import {Exercise, Renderer} from "./domain"
 import {selectModel} from "./models/models";
@@ -11,7 +12,14 @@ export const setupScene = (scene: Scene, exercise: Exercise, renderer: Renderer)
     const selectedRenderer = selectRenderer(renderer)
     const disposeFunction = selectedRenderer(scene, model)
 
-    const createGround = (scene: Scene) => Mesh.CreateGround("ground1", 10, 10, 1, scene)
+    const createGround = (scene: Scene) => {
+        const ground = Mesh.CreateGround("ground", 100, 100, 100, scene, false)
+        const groundMaterial = new StandardMaterial("ground", scene)
+        groundMaterial.specularColor = new Color3(0, 0, 0)
+        ground.material = groundMaterial
+        ground.receiveShadows = true
+        return ground
+    }
 
     const ground = model.hasGround ? createGround(scene) : null
 
