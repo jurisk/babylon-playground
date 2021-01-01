@@ -10,7 +10,8 @@
   "dependencies": {
     "@babylonjs/core": "^4.2.0",
     "@babylonjs/gui": "^4.2.0",
-    "@babylonjs/inspector": "^4.2.0"
+    "@babylonjs/inspector": "^4.2.0",
+    "fp-ts": "^2.9.3"
   },
   "devDependencies": {
     "html-webpack-plugin": "^4.5.0",

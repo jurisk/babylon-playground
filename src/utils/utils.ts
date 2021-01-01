@@ -1,1 +1,1 @@
-export const normalizeColor = (c: number, min: number, max: number) => ((c - min) / (max - min))
+export const normalize = (value: number, min: number, max: number) => ((value - min) / (max - min))

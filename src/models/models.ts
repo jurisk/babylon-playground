@@ -1,8 +1,10 @@
 import {Color3} from "@babylonjs/core";
 import {Vector3} from "@babylonjs/core/Maths/math.vector";
 import {Exercise} from "../domain";
-import {model0} from "./model0";
-import {model1} from "./model1";
+import {createModel0} from "./model0";
+import {createModel1} from "./model1";
+import {createModel2} from "./model2";
+import {createModel3} from "./model3";
 
 export interface Figure {
     position: Vector3
@@ -18,35 +20,15 @@ export interface Model {
 export const selectModel = (exercise: Exercise): Model => {
     switch (exercise) {
         case Exercise.Exercise0:
-            return model0
+            return createModel0()
 
         case Exercise.Exercise1:
-            return model1
+            return createModel1()
 
         case Exercise.Exercise2:
-            return {
-                hasGround: true,
-                figures: figures2,
-            }
+            return createModel2()
 
         case Exercise.Exercise3:
-            return {
-                hasGround: true,
-                figures: figures3,
-            }
+            return createModel3()
     }
 }
-
-// TODO: implement
-const figures2: Figure[] = [{
-    name: 'test',
-    position: new Vector3(0, 0, 0),
-    color: new Color3(0.5, 0.5, 0.5),
-}]
-
-// TODO: implement
-const figures3: Figure[] = [{
-    name: 'test',
-    position: new Vector3(0, 0, 0),
-    color: new Color3(0.5, 0.5, 0.5),
-}]
