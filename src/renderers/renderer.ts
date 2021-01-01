@@ -1,8 +1,8 @@
 import {Renderer} from "../domain";
-import {meshRenderer} from "./meshRenderer";
 import {Node, Scene} from "@babylonjs/core";
-import {cloneRenderer} from "./cloneRenderer";
 import {Model} from "../models/models";
+import {meshRenderer} from "./meshRenderer";
+import {cloneRenderer} from "./cloneRenderer";
 import {thinInstanceRenderer} from "./thin-instance-renderer"
 import {instancedMeshRenderer} from "./instanced-mesh-renderer";
 import {solidParticleSystemRenderer} from "./solid-particle-system-renderer";
