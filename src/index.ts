@@ -12,6 +12,7 @@ import '@babylonjs/inspector'
 import {Exercise, Renderer} from "./domain";
 import {setupScene} from "./setup-scene";
 import {createUi} from "./ui";
+import {DisposeFunction} from "./renderer";
 
 const createLight = (scene: Scene): Light =>
     new HemisphericLight("light", new Vector3(0, 1, 0), scene)
@@ -42,7 +43,7 @@ const createScene =  (canvas: HTMLCanvasElement, engine: Engine) => {
     return scene
 }
 
-let disposePrevious: () => void = () => {}
+let disposePrevious: DisposeFunction = () => {}
 
 const recreateScene = (scene: Scene, exercise: Exercise, renderer: Renderer): void => {
     disposePrevious()
