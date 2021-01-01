@@ -11,7 +11,7 @@ import {
 import '@babylonjs/inspector'
 import {Exercise, Renderer} from "./domain";
 import {setupScene} from "./setup-scene";
-import {createUi} from "./ui";
+import {createUi, recreate} from "./ui";
 import {showAxis} from "./utils/show-axis";
 import {DisposeFunction} from "./renderers/renderer";
 
@@ -66,7 +66,7 @@ const run = () => {
         scene.render()
     })
 
-    recreateScene(scene, Exercise.Exercise3, Renderer.Mesh)
+    recreate(scene, recreateScene)
 }
 
 run()

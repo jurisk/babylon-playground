@@ -15,14 +15,18 @@ const createButton = (parent: GUI.Container, name: string, text: string, callbac
     parent.addControl(button)
 }
 
+export const recreate = (scene: Scene, recreateScene: (scene: Scene, exercise: Exercise, renderer: Renderer) => void) => {
+    recreateScene(scene, selectedExercise, selectedRenderer)
+}
+
 const changeExercise = (exercise: Exercise, scene: Scene, recreateScene: (scene: Scene, exercise: Exercise, renderer: Renderer) => void): void => {
     selectedExercise = exercise
-    recreateScene(scene, selectedExercise, selectedRenderer)
+    recreate(scene, recreateScene)
 }
 
 const changeRendering = (renderer: Renderer, scene: Scene, recreateScene: (scene: Scene, exercise: Exercise, renderer: Renderer) => void): void => {
     selectedRenderer = renderer
-    recreateScene(scene, selectedExercise, selectedRenderer)
+    recreate(scene, recreateScene)
 }
 
 export const createUi = (scene: Scene, recreateScene: (scene: Scene, exercise: Exercise, renderer: Renderer) => void) => {
