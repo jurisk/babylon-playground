@@ -1,5 +1,5 @@
 import {Color3} from "@babylonjs/core";
-import {Figure, Model} from "./models";
+import {Figure, FigureType, Model} from "./models";
 import {normalize} from "../utils/utils";
 import {Vector3} from "@babylonjs/core/Maths/math.vector";
 import {range} from "fp-ts/Array";
@@ -15,6 +15,7 @@ export const createModel2 = (): Model => {
                 const y = 0.5 + level * (1 / Math.sqrt(2)) // Height of a equilateral square pyramid: https://en.wikipedia.org/wiki/Square_pyramid#Equilateral_square_pyramid,_Johnson_solid_J1
                 const figure = {
                     name: `figure_${x}_${y}_${z}`,
+                    type: 'sphere' as FigureType,
                     position: new Vector3(x, y, z),
                     color: new Color3(normalize(r, 0, 3 - level), normalize(level, 0, 3), normalize(c, 0, 3 - level)),
                 }

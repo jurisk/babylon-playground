@@ -6,8 +6,12 @@ import {createModel1} from "./model1";
 import {createModel2} from "./model2";
 import {createModel3} from "./model3";
 
+export type FigureType = 'sphere' | 'square-chip'
+
 export interface Figure {
     position: Vector3
+    rotation?: Vector3
+    type: FigureType,
     color: Color3
     name: string
 }

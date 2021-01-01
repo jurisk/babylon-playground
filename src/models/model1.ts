@@ -14,6 +14,7 @@ export const createModel1 = (): Model => {
                 array.flatMap((z) => {
                     return (x + y + z < distance * 5) ? [{
                         name: `figure_${x}_${y}_${z}`,
+                        type: 'sphere',
                         position: new Vector3(x, y, z),
                         color: new Color3(normalizeColor(x), normalizeColor(y), normalizeColor(z)),
                     }] : []

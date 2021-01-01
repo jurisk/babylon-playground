@@ -1,10 +1,19 @@
-import {Color3, Mesh, Scene, SphereBuilder, StandardMaterial} from "@babylonjs/core"
-import {Model} from "../models/models";
+import {BoxBuilder, Color3, Mesh, Scene, SphereBuilder, StandardMaterial} from "@babylonjs/core"
+import {FigureType, Model} from "../models/models";
 import {DisposeFunction, nodeDisposer} from "./renderer";
 
 export const meshRenderer = (scene: Scene, model: Model): DisposeFunction => {
-    const createMesh = (name: string, diameter: number, scene: Scene, color: Color3): Mesh => {
-        const mesh = SphereBuilder.CreateSphere(name, { diameter }, scene)
+    const buildMesh = (name: string, figureType: FigureType) => {
+        switch (figureType) {
+            case 'sphere':
+                return SphereBuilder.CreateSphere(name, { diameter: 1 }, scene)
+            case 'square-chip':
+                return BoxBuilder.CreateBox(name, {width: 2, depth: 2, height: 0.5}, scene)
+        }
+    }
+
+    const createMesh = (name: string, figureType: FigureType, color: Color3): Mesh => {
+        const mesh = buildMesh(name, figureType)
         const material = new StandardMaterial(`${name}-material`, scene)
         material.diffuseColor = color
         mesh.material = material
@@ -14,8 +23,11 @@ export const meshRenderer = (scene: Scene, model: Model): DisposeFunction => {
     const createdMeshes = []
 
     model.figures.forEach((figure) => {
-        const mesh = createMesh(figure.name, 1, scene, figure.color)
+        const mesh = createMesh(figure.name, figure.type, figure.color)
         mesh.position = figure.position
+        if (figure.rotation) {
+            mesh.rotation = figure.rotation
+        }
         createdMeshes.push(mesh)
     })
 

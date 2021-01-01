@@ -14,6 +14,7 @@ export const createModel0 = (): Model => {
                 array.map((z) => {
                     return {
                         name: `figure_${x}_${y}_${z}`,
+                        type: 'sphere',
                         position: new Vector3(x, y, z),
                         color: new Color3(normalizeColor(x), normalizeColor(y), normalizeColor(z)),
                     }
