@@ -1,23 +1,14 @@
-import {BoxBuilder, Color4, Matrix, Scene, SphereBuilder, StandardMaterial} from "@babylonjs/core";
-import {FigureType, Model} from "../models/models";
+import {Color4, Matrix, Scene, StandardMaterial} from "@babylonjs/core";
+import {buildTemplate, Model} from "../models/models";
 import {DisposeFunction} from "./renderer";
 
 export const thinInstanceRenderer = (scene: Scene, model: Model): DisposeFunction => {
-    const buildMesh = (name: string, figureType: FigureType) => {
-        switch (figureType) {
-            case 'sphere':
-                return SphereBuilder.CreateSphere(name, { diameter: 1 }, scene)
-            case 'square-chip':
-                return BoxBuilder.CreateBox(name, {width: 2, depth: 2, height: 0.5}, scene)
-        }
-    }
-
     const figureType = model.figures[0].type
     if (!model.figures.every((figure) => figure.type === figureType)) {
         throw new Error("Expected all figures to have the same type")
     }
 
-    const template = buildMesh('template', figureType)
+    const template = buildTemplate(figureType, scene)
     template.material = new StandardMaterial("template-material", scene)
     const bufferMatrices = new Float32Array(16 * model.figures.length)
     const bufferColors = new Float32Array(4 * model.figures.length)

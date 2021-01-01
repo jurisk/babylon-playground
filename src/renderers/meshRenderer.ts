@@ -1,19 +1,11 @@
-import {BoxBuilder, Color3, Mesh, Scene, SphereBuilder, StandardMaterial} from "@babylonjs/core"
-import {FigureType, Model} from "../models/models";
+import {Color3, Mesh, Scene, StandardMaterial} from "@babylonjs/core"
+import {buildTemplate, FigureType, Model} from "../models/models";
 import {DisposeFunction, nodeDisposer} from "./renderer";
 
 export const meshRenderer = (scene: Scene, model: Model): DisposeFunction => {
-    const buildMesh = (name: string, figureType: FigureType) => {
-        switch (figureType) {
-            case 'sphere':
-                return SphereBuilder.CreateSphere(name, { diameter: 1 }, scene)
-            case 'square-chip':
-                return BoxBuilder.CreateBox(name, {width: 2, depth: 2, height: 0.5}, scene)
-        }
-    }
-
     const createMesh = (name: string, figureType: FigureType, color: Color3): Mesh => {
-        const mesh = buildMesh(name, figureType)
+        const mesh = buildTemplate(figureType, scene)
+        mesh.name = name
         const material = new StandardMaterial(`${name}-material`, scene)
         material.diffuseColor = color
         mesh.material = material
