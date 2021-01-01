@@ -48,4 +48,5 @@ export const createUi = (scene: Scene, recreateScene: (scene: Scene, exercise: E
     createButton(renderingPanel,"clone", "Clone", () => changeRendering(Renderer.Clone, scene, recreateScene))
     createButton(renderingPanel,"instancedMesh", "Instanced Mesh", () => changeRendering(Renderer.InstancedMesh, scene, recreateScene))
     createButton(renderingPanel,"thinInstance", "Thin Instance", () => changeRendering(Renderer.ThinInstance, scene, recreateScene))
+    createButton(renderingPanel,"solidParticleSystem", "Solid Particle System", () => changeRendering(Renderer.SolidParticleSystem, scene, recreateScene))
 }
