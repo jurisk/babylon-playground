@@ -24,7 +24,17 @@ export const thinInstanceRenderer = (scene: Scene, model: Model): DisposeFunctio
 
     model.figures.forEach((figure, idx) => {
         const translation = Matrix.Translation(figure.position.x, figure.position.y, figure.position.z)
-        translation.copyToArray(bufferMatrices, 16 * idx)
+        const rotationX = Matrix.RotationX(figure.rotation?.x || 0)
+        const rotationY = Matrix.RotationY(figure.rotation?.y || 0)
+        const rotationZ = Matrix.RotationZ(figure.rotation?.z || 0)
+
+        const combined = translation
+            .multiply(rotationX)
+            .multiply(rotationY)
+            .multiply(rotationZ)
+
+        combined.copyToArray(bufferMatrices, 16 * idx)
+
         const color = new Color4(figure.color.r, figure.color.g, figure.color.b, 1)
         bufferColors[4 * idx] = color.r
         bufferColors[4 * idx + 1] = color.g

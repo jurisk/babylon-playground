@@ -2,9 +2,8 @@ import {
     ArcRotateCamera,
     Camera,
     DebugLayer,
-    Engine,
-    HemisphericLight,
-    Light,
+    DirectionalLight,
+    Engine, HemisphericLight,
     Scene,
     Vector3
 } from "@babylonjs/core"
@@ -15,8 +14,13 @@ import {createUi, recreate} from "./ui";
 import {showAxis} from "./utils/show-axis";
 import {DisposeFunction} from "./renderers/renderer";
 
-const createLight = (scene: Scene): Light =>
-    new HemisphericLight("light", new Vector3(0, 1, 0), scene)
+const createLights = (scene: Scene): void => {
+    const directionalLight = new DirectionalLight("directional-light", new Vector3(1, -1, 0.5), scene)
+    directionalLight.intensity = 1
+
+    const hemisphericLight = new HemisphericLight("hemispheric-light", new Vector3(0, 1, 0), scene)
+    hemisphericLight.intensity = 0.25
+}
 
 const createCanvas = (): HTMLCanvasElement => {
     const canvas = document.createElement("canvas")
@@ -37,7 +41,7 @@ const showDebugger: (scene: Scene) => Promise<DebugLayer> = (scene: Scene) => sc
 const createScene =  (canvas: HTMLCanvasElement, engine: Engine) => {
     const scene = new Scene(engine)
 
-    createLight(scene)
+    createLights(scene)
     createCamera(canvas, scene)
 
     showAxis(scene, 10)
