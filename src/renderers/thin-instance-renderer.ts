@@ -1,5 +1,5 @@
 import {Color4, Matrix, Scene, SphereBuilder, StandardMaterial} from "@babylonjs/core";
-import {Model} from "./models";
+import {Model} from "../models/models";
 import {DisposeFunction} from "./renderer";
 
 export const thinInstanceRenderer = (scene: Scene, model: Model): DisposeFunction => {

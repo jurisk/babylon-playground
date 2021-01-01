@@ -12,7 +12,8 @@ import '@babylonjs/inspector'
 import {Exercise, Renderer} from "./domain";
 import {setupScene} from "./setup-scene";
 import {createUi} from "./ui";
-import {DisposeFunction} from "./renderer";
+import {showAxis} from "./utils/show-axis";
+import {DisposeFunction} from "./renderers/renderer";
 
 const createLight = (scene: Scene): Light =>
     new HemisphericLight("light", new Vector3(0, 1, 0), scene)
@@ -38,6 +39,8 @@ const createScene =  (canvas: HTMLCanvasElement, engine: Engine) => {
 
     createLight(scene)
     createCamera(canvas, scene)
+
+    showAxis(scene, 10)
     showDebugger(scene)
 
     return scene

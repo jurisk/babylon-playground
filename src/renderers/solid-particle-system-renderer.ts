@@ -1,6 +1,6 @@
 import {DisposeFunction} from "./renderer";
 import {Scene, SolidParticleSystem, SphereBuilder} from "@babylonjs/core";
-import {Model} from "./models";
+import {Model} from "../models/models";
 
 export const solidParticleSystemRenderer = (scene: Scene, model: Model): DisposeFunction => {
     const size = 0.5

@@ -1,5 +1,5 @@
 import {Color3, Mesh, Scene, SphereBuilder, StandardMaterial} from "@babylonjs/core"
-import {Model} from "./models";
+import {Model} from "../models/models";
 import {DisposeFunction, nodeDisposer} from "./renderer";
 
 export const meshRenderer = (scene: Scene, model: Model): DisposeFunction => {

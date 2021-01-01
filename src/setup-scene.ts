@@ -3,8 +3,8 @@ import {
     Scene,
 } from "@babylonjs/core"
 import {Exercise, Renderer} from "./domain"
-import {selectModel} from "./models";
-import {DisposeFunction, selectRenderer} from "./renderer";
+import {selectModel} from "./models/models";
+import {DisposeFunction, selectRenderer} from "./renderers/renderer";
 
 export const setupScene = (scene: Scene, exercise: Exercise, renderer: Renderer): DisposeFunction => {
     const model = selectModel(exercise)
